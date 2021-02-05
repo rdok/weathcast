@@ -6,7 +6,12 @@ const mapboxAPI = `https://api.mapbox.com/geocoding/v5/mapbox.places/London.json
   + `&limit=1`;
 
 request({ url: mapboxAPI, json: true }, (error, response) => {
-  const { center } = response.body.features[0];
+  if (error) throw new Error('Unable to connect to mapbox service.');
+
+  const { statusCode, body } = response;
+  if (statusCode !== 200) throw new Error('Invalid mapbox request.');
+
+  const { center } = body.features[0];
   const longitude = center[0];
   const latitude = center[1];
   console.log(longitude);
@@ -17,7 +22,11 @@ request({ url: mapboxAPI, json: true }, (error, response) => {
     `&query=${latitude},${longitude}`;
 
   request({ url, json: true }, (error, response) => {
-    const { temperature, feelslike, weather_descriptions } = response.body.current;
+    if (error) throw new Error('Unable to connect to weatherstack service.');
+    const { statusCode, body } = response;
+    if (statusCode !== 200) throw new Error('Invalid weatherstack request.');
+
+    const { temperature, feelslike, weather_descriptions } = body.current;
 
     const message = `${weather_descriptions[0]}: `
       + `It is currently ${temperature} degrees out.`
