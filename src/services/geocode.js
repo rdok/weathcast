@@ -7,13 +7,21 @@ const geocode = (location, callback) => {
     + `&limit=1`;
   request({ url: mapboxAPI, json: true }, (error, response) => {
 
-    if (error) return callback('Unable to connect to mapbox service.');
+    if (error) {
+      return callback('Unable to connect to mapbox service.');
+    }
 
     const { statusCode, body } = response;
-    if (statusCode !== 200) return callback('Invalid mapbox request.');
+    if (statusCode !== 200) {
+      return callback('Invalid mapbox request.');
+    }
 
-    const { center, place_name } = body.features[0];
-    callback(error, { longitude: center[0], latitude: center[1], location: place_name });
+    const feature = body.features[0];
+    const placeName = feature.place_name;
+    const { center } = body.features[0];
+
+    callback(error, { longitude: center[0], latitude: center[1], location: placeName });
   });
 };
+
 module.exports = geocode;

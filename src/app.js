@@ -25,5 +25,6 @@ geocode('London', (error, data) => {
     console.error(error);
     return;
   }
+
   console.log(data);
 });

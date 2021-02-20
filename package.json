@@ -2,10 +2,12 @@
   "name": "weather",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "app": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "app": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "linter": "eslinter src/**/*.js",
+    "linter:fix": "eslinter src/**/*.js --fix"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "homepage": "https://github.com/rdok/weather#readme",
   "dependencies": {
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "eslinter": "^3.2.1"
   }
 }
