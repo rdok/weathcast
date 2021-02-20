@@ -1,24 +1,5 @@
 const geocode = require("./services/geocode");
-
-
-//   const url = 'http://api.weatherstack.com/current?' +
-//     'access_key=f2aab74f65bd756a3b77784ed97d5ca4' +
-//     `&query=${latitude},${longitude}`;
-//
-//   request({ url, json: true }, (error, response) => {
-//     if (error) throw new Error('Unable to connect to weatherstack service.');
-//     const { statusCode, body } = response;
-//     if (statusCode !== 200) throw new Error('Invalid weatherstack request.');
-//
-//     const { temperature, feelslike, weather_descriptions } = body.current;
-//
-//     const message = `${weather_descriptions[0]}: `
-//       + `It is currently ${temperature} degrees out.`
-//       + ` It feels like ${feelslike} degrees out`;
-//
-//     console.log(message);
-//   });
-// });
+const currentWeather = require("./services/current-weather");
 
 geocode('London', (error, data) => {
   if (error) {
@@ -26,5 +7,8 @@ geocode('London', (error, data) => {
     return;
   }
 
-  console.log(data);
+  const { longitude, latitude } = data;
+  currentWeather(longitude, latitude, (error, data) => {
+    console.log(data);
+  });
 });

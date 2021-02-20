@@ -20,7 +20,11 @@ const geocode = (location, callback) => {
     const placeName = feature.place_name;
     const { center } = body.features[0];
 
-    callback(error, { longitude: center[0], latitude: center[1], location: placeName });
+    callback(error, {
+      longitude: center[0],
+      latitude: center[1],
+      location: placeName
+    });
   });
 };
 
