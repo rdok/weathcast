@@ -6,3 +6,6 @@ linter:
 
 linter-fix:
 	yarn linter:fix
+
+test-watch:
+	yarn test:watch
