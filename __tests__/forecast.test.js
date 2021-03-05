@@ -1,6 +1,9 @@
 const forecast = require("../src/services/forecast");
 const {
-  makeWeatherstackConnectionError, mockWeatherstackResponse
+  mockWeatherstackConnectionError,
+  mockWeatherstackResponse,
+  mockWeatherstackServerError,
+  mockWeatherstackAPIError
 } = require("./mocks/weatherstack");
 
 describe('forecast', () => {
@@ -19,11 +22,31 @@ describe('forecast', () => {
   });
 
   it('should handle connection errors', done => {
-    makeWeatherstackConnectionError('a-latitude', 'a-longitude');
+    mockWeatherstackConnectionError('b-latitude', 'b-longitude');
 
-    forecast('a-latitude', 'a-longitude', (error, data) => {
+    forecast('b-latitude', 'b-longitude', (error, data) => {
       expect(data).toBeUndefined();
       expect(error).toEqual('Unable to connect to weatherstack service.');
+      done();
+    });
+  });
+
+  it('should handle server error', done => {
+    mockWeatherstackServerError('c-latitude', 'c-longitude');
+
+    forecast('c-latitude', 'c-longitude', (error, data) => {
+      expect(data).toBeUndefined();
+      expect(error).toEqual('Invalid weatherstack request.');
+      done();
+    });
+  });
+
+  it('should handle API error', done => {
+    mockWeatherstackAPIError('d-latitude', 'd-longitude');
+
+    forecast('d-latitude', 'd-longitude', (error, data) => {
+      expect(data).toBeUndefined();
+      expect(error).toEqual('Invalid API request.');
       done();
     });
   });
