@@ -1,4 +1,4 @@
-const forecast = require("../src/services/forecast");
+const forecast = require("../src/forecast");
 const {
   mockWeatherstackConnectionError,
   mockWeatherstackResponse,
