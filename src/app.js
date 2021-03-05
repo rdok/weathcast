@@ -1,14 +1,19 @@
 const geocode = require("./services/geocode");
-const currentWeather = require("./services/current-weather");
+const forecast = require("./services/forecast");
 
-geocode('London', (error, data) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
+const args = process.argv.slice(2);
+const error = 'Exactly one argument is required with location.';
+if (args.length !== 1) throw new Error(error);
+const location = args[0];
 
-  const { longitude, latitude } = data;
-  currentWeather(longitude, latitude, (error, data) => {
-    console.log(data);
+geocode(location, (error, data) => {
+  if (error) return console.error(error);
+
+  const { longitude, latitude, location } = data;
+  forecast(longitude, latitude, (error, data) => {
+    if (error) return console.error(error);
+
+    console.log(location)
+    console.log('Data', data);
   });
 });

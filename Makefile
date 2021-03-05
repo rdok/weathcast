@@ -1,5 +1,5 @@
 start:
-	yarn app
+	yarn app London
 
 linter:
 	yarn linter
