@@ -7,7 +7,8 @@
     "app": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "linter": "eslinter src/**/*.js",
-    "linter:fix": "eslinter src/**/*.js --fix"
+    "linter:fix": "eslinter src/**/*.js --fix",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "eslinter": "^3.2.1",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "nock": "^13.0.10"
   }
 }
