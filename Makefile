@@ -7,5 +7,7 @@ linter:
 linter-fix:
 	yarn linter:fix
 
+test:
+	yarn test
 test-watch:
 	yarn test:watch
