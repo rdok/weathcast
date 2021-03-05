@@ -15,12 +15,12 @@ const forecast = (longitude, latitude, callback) => {
       return callback('Invalid weatherstack request.');
     }
 
-    const { temperature, feelslike} = body.current;
-    const weatherDescriptions = body.current.weather_descriptions;
+    const { temperature, feelslike: feelsLike } = body.current;
+    const { weather_descriptions: weatherDescriptions } = body.current;
 
     const message = `${weatherDescriptions[0]}: `
       + `It is currently ${temperature} degrees out.`
-      + ` It feels like ${feelslike} degrees out`;
+      + ` It feels like ${feelsLike} degrees out`;
 
     return callback(undefined, message);
   });
