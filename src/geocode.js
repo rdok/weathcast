@@ -5,6 +5,7 @@ const geocode = (location, callback) => {
   const mapboxAPI = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedLocation}.json`
     + `?access_token=pk.eyJ1IjoicmRvayIsImEiOiJja2tscmpxNGQxZDM1MnZ0ZG1reDFtczZrIn0.wHmcGpVIyFyRkwL7W18ZRA`
     + `&limit=1`;
+
   request({ url: mapboxAPI, json: true }, (error, response) => {
 
     if (error) {
@@ -16,6 +17,9 @@ const geocode = (location, callback) => {
       return callback('Invalid mapbox request.');
     }
 
+    if(body.features.length === 0) {
+      return callback('Invalid API request.');
+    }
     const feature = body.features[0];
     const placeName = feature.place_name;
     const { center } = body.features[0];
