@@ -1,10 +1,10 @@
 start:
 	yarn app London
 
-linter:
+lint:
 	yarn linter
 
-linter-fix:
+lint-fix:
 	yarn linter:fix
 
 test:
