@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches: [main]
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -11,3 +11,4 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install --frozen-lockfile
       - run: yarn linter
+      - run: yarn test
