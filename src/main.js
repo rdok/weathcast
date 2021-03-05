@@ -1,5 +1,5 @@
-const geocode = require("./domain/geocode");
-const forecast = require("./domain/forecast");
+const geocode = require("./geocode");
+const forecast = require("./forecast");
 
 const args = process.argv.slice(2);
 const error = 'Exactly one argument is required with location.';

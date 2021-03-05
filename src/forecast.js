@@ -14,7 +14,7 @@ const forecast = (longitude, latitude, callback) => {
     if (statusCode !== 200) {
       return callback('Invalid weatherstack request.');
     }
-    if (body.success !== true) {
+    if (body.success === false) {
       return callback('Invalid API request.');
     }
 
