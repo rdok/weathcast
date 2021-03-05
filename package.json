@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "app": "node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "linter": "eslinter src/**/*.js",
     "linter:fix": "eslinter src/**/*.js --fix",
     "test:watch": "jest --watch"
