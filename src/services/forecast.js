@@ -11,12 +11,14 @@ const forecast = (longitude, latitude, callback) => {
     }
 
     const { statusCode, body } = response;
-    if (statusCode !== 200) {
-      return callback('Invalid weatherstack request.');
-    }
+    if (statusCode !== 200) return callback('Invalid weatherstack request.');
+    if (body.success !== true) return callback('Invalid API request.');
 
-    const { temperature, feelslike: feelsLike } = body.current;
-    const { weather_descriptions: weatherDescriptions } = body.current;
+    const {
+      temperature,
+      feelslike: feelsLike,
+      weather_descriptions: weatherDescriptions
+    } = body.current;
 
     const message = `${weatherDescriptions[0]}: `
       + `It is currently ${temperature} degrees out.`
