@@ -1,3 +1,3 @@
 module.exports = {
-  modulePathIgnorePatterns: ["<rootDir>/__tests__/factories"]
+  modulePathIgnorePatterns: ["<rootDir>/__tests__/mocks"]
 };
