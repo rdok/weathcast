@@ -1,8 +1,8 @@
-const geocode = require('./geocode');
-const forecast = require('./forecast');
+const geocode = require("./geocode");
+const forecast = require("./forecast");
 
 const args = process.argv.slice(2);
-const executionError = 'Exactly one argument is required with location.';
+const executionError = "Exactly one argument is required with location.";
 if (args.length !== 1) {
   throw new Error(executionError);
 }
@@ -19,7 +19,7 @@ geocode(argLocation, (geocodeError, geocodeData) => {
       throw new Error(error);
     }
 
-    console.log(location); // eslint-disable-line no-console
-    console.log('Data', data); // eslint-disable-line no-console
+    console.log(location);
+    console.log("Data", data);
   });
 });
