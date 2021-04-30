@@ -1,22 +1,22 @@
 {
   "name": "weather",
+  "license": "UNLICENSED",
   "version": "1.0.0",
   "description": "",
   "main": "src/main.js",
   "scripts": {
     "app": "node src/main.js",
     "test": "jest",
-    "linter": "eslinter src/**/*.js",
-    "linter:fix": "eslinter src/**/*.js --fix",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "linter": "eslint src/**/*.js __tests__/**/*.js",
+    "prettier": "prettier --check ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rdok/weather.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Rizart Dokollari",
   "bugs": {
     "url": "https://github.com/rdok/weather/issues"
   },
@@ -25,8 +25,10 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "eslinter": "^3.2.1",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
     "jest": "^26.6.3",
-    "nock": "^13.0.10"
+    "nock": "^13.0.10",
+    "prettier": "2.2.1"
   }
 }
