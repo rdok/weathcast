@@ -1,6 +1,6 @@
 {
-  "name": "weather",
-  "license": "UNLICENSED",
+  "name": "weather-client",
+  "license": "ISC",
   "version": "1.0.0",
   "description": "",
   "main": "src/main.js",

@@ -1,4 +1,4 @@
-start:
+weather-london:
 	yarn app London
 
 check: lint prettier test
