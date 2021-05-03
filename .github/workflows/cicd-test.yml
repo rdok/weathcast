@@ -25,6 +25,8 @@ jobs:
             --confirm=${{ steps.env.outputs.app }} || true
           heroku apps:create --region eu ${{ steps.env.outputs.app }}
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
+          git remote show
+          git remote show origin
           git push heroku ${{ github.head_ref }}:main
           heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
