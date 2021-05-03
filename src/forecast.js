@@ -6,18 +6,11 @@ const forecast = (longitude, latitude, callback) => {
     "access_key=f2aab74f65bd756a3b77784ed97d5ca4" +
     `&query=${latitude},${longitude}`;
 
-  request({ url, json: true }, (error, response) => {
-    if (error) {
-      return callback("Unable to connect to weatherstack service.");
-    }
+  request({ url, json: true }, (error, { statusCode, body } = {}) => {
+    if (error) return callback("Unable to connect to weatherstack service.");
 
-    const { statusCode, body } = response;
-    if (statusCode !== 200) {
-      return callback("Invalid weatherstack request.");
-    }
-    if (body.success === false) {
-      return callback("Invalid API request.");
-    }
+    if (statusCode !== 200) return callback("Invalid weatherstack request.");
+    if (body.success === false) return callback("Invalid API request.");
 
     const { temperature, feelslike: feelsLike } = body.current;
     const weatherDescriptions = body.current.weather_descriptions;

@@ -1,4 +1,9 @@
+dev-start:
+	npm run start
 start:
+	npm run start
+
+weathcast-london:
 	yarn app London
 
 check: lint prettier test
