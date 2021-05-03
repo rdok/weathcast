@@ -1,0 +1,19 @@
+name: CD
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ dev ]
+jobs:
+  ci:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: heroku --version
+#      - run: yarn install --frozen-lockfile
+#      - run: make lint
+#      - run: make prettier
+#      - run: make test
+#      - run: make test
