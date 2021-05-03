@@ -1,19 +1,22 @@
-name: CD
-env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-on:
-  pull_request:
-    branches: [ main ]
-  push:
-    branches: [ dev ]
-jobs:
-  build:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: heroku --version
+#name: CD
+#env:
+#  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#on:
+#  pull_request:
+#    branches: [ main ]
+#  push:
+#    branches: [ dev ]
+#jobs:
+#  build:
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: heroku login
 #      - run: yarn install --frozen-lockfile
-#      - run: make lint
+#      - run: |
+#          heroku apps:create --region eu rdok-pr14-weather
+#          heroku pipelines:add --app rdok-pr14-weather --stage development weather
+#          heroku pipelines:promote --app rdok-pr14-weather
 #      - run: make prettier
 #      - run: make test
 #      - run: make test
