@@ -5,7 +5,8 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "nodemon src/main.js",
+    "start": "node src/main.js",
+    "start:dev": "nodemon src/main.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "linter": "eslint src/**/*.js __tests__/**/*.js",

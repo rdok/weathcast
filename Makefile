@@ -1,3 +1,5 @@
+dev-start:
+	npm run start
 start:
 	npm run start
 
