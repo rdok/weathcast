@@ -1,0 +1,24 @@
+name: CD prod
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  PIPELINE: weather
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare environment variables
+        id: env
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          echo $PR_NUMBER
+          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weather"
+      - run: yarn install --frozen-lockfile
+      - run: make lint
+      - run: make prettier
+      - run: make test
+      - run: |
+          heroku pipelines:promote --app ${{ steps.env.outputs.app }}
