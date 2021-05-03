@@ -15,15 +15,16 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
-      - run: yarn install --frozen-lockfile
-      - run: make lint
-      - run: make prettier
-      - run: make test
+#      - run: yarn install --frozen-lockfile
+#      - run: make lint
+#      - run: make prettier
+#      - run: make test
       - run: |
+          heroku login
           git checkout -b ${{ github.head_ref }}
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
-          heroku git:remote --app=${{ steps.env.outputs.app }} --ssh-git
+          heroku git:remote --app=${{ steps.env.outputs.app }}
           git push heroku ${{ github.head_ref }}:main
           heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
