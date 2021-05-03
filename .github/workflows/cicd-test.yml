@@ -33,18 +33,19 @@ jobs:
         run: |
           git checkout -b ${{ github.head_ref }}
           # Fail silently when app already exists
-          heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
+          heroku apps:destroy ${{ steps.env.outputs.app }} \
+            --confirm=${{ steps.env.outputs.app }} || true
+          heroku apps:create --region eu ${{ steps.env.outputs.app }}
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
       - name: Deploy
         run: |
           git push heroku ${{ github.head_ref }}:main --force
           heroku ps:scale web=1
-          # Fail silently when app already exists
           heroku pipelines:add \
             --app ${{ steps.env.outputs.app }} \
             --stage development \
-            $PIPELINE || true
+            $PIPELINE
       - name: Cleanup
         if: always()
         run: rm --force ~/.netrc
