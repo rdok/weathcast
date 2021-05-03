@@ -23,7 +23,7 @@ jobs:
           git checkout -b ${{ github.head_ref }}
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
-          heroku git:remote --app= ${{ steps.env.outputs.app }
+          heroku git:remote --app=${{ steps.env.outputs.app }}
           git push heroku ${{ github.head_ref }}:main
           heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
