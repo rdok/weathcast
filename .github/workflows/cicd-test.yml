@@ -29,9 +29,10 @@ jobs:
             "s/{{HEROKU_AUTH_TOKEN}}/${HEROKU_AUTH_TOKEN}/g" \
             .github/workflows/.netrc
           mv .github/workflows/.netrc ~/
-      - name: Deploy configuration
+      - name: Prepare deployment
         run: |
           git checkout -b ${{ github.head_ref }}
+          # Fail silently when app already exists
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
@@ -39,8 +40,11 @@ jobs:
         run: |
           git push heroku ${{ github.head_ref }}:main --force
           heroku ps:scale web=1
-          heroku pipelines:add --app ${{ steps.env.outputs.app }} \
-            --stage development $PIPELINE
+          # Fail silently when app already exists
+          heroku pipelines:add \
+            --app ${{ steps.env.outputs.app }} \
+            --stage development \
+            $PIPELINE || true
       - name: Cleanup
         if: always()
         run: rm --force ~/.netrc
