@@ -1,19 +1,29 @@
+const express = require("express");
 const geocode = require("./geocode");
 const forecast = require("./forecast");
 
-const args = process.argv.slice(2);
-const executionError = "Exactly one argument is required with location.";
-if (args.length !== 1) throw new Error(executionError);
+const app = express();
 
-const argLocation = args[0];
+app.get("/", (req, res) => {
+  res.send("Hello express!");
+});
 
-geocode(argLocation, (geocodeError, { longitude, latitude, location } = {}) => {
-  if (geocodeError) throw new Error(geocodeError);
+app.get("/about", (req, res) => {
+  res.send("<h1>About Section</h1>");
+});
 
-  forecast(longitude, latitude, (error, data) => {
-    if (error) throw new Error(error);
+app.get("/current-weathers/:location", (req, res) => {
+  const location = req.params.location;
+  geocode(location, (geocodeError, { longitude, latitude, location } = {}) => {
+    if (geocodeError) return res.status(500).send({ error: geocodeError });
 
-    console.log(location);
-    console.log("Data", data);
+    forecast(longitude, latitude, (error, data) => {
+      if (error) return res.status(500).send({ error });
+      res.send({ location, currentWeather: data });
+    });
   });
+});
+
+app.listen(3000, () => {
+  console.log("Listening http://localhost:3000");
 });

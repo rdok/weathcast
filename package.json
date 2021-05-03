@@ -5,11 +5,11 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "app": "node src/main.js",
+    "start": "nodemon src/main.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "linter": "eslint src/**/*.js __tests__/**/*.js",
-    "prettier": "prettier --check ."
+    "prettier": "prettier --check src/**/*.js __tests__/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/rdok/weather#readme",
   "dependencies": {
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "eslint": "^7.25.0",
