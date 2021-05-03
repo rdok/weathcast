@@ -17,22 +17,27 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
-#      - run: yarn install --frozen-lockfile
-#      - run: make lint
-#      - run: make prettier
-#      - run: make test
+      - name: CI
+        run: |
+          yarn install --frozen-lockfile
+          make lint
+          make prettier
+          make test
       - name: Heroku Login
         run: |
           sed --in-place --expression \
             "s/{{HEROKU_AUTH_TOKEN}}/${HEROKU_AUTH_TOKEN}/g" \
             .github/workflows/.netrc
           mv .github/workflows/.netrc ~/
-      - run: |
+      - name: Deploy configuration
+        run:
           git checkout -b ${{ github.head_ref }}
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
-          git push heroku ${{ github.head_ref }}:main
+      - name: Deploy
+        run:
+          git push heroku ${{ github.head_ref }}:main --force
           heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
             --stage development $PIPELINE
