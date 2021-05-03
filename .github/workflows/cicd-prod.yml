@@ -14,7 +14,8 @@ jobs:
         id: env
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          echo $PR_NUMBER
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "PR_NUMBER: ${PR_NUMBER}"
           echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
       - run: yarn install --frozen-lockfile
       - run: make lint
