@@ -30,13 +30,13 @@ jobs:
             .github/workflows/.netrc
           mv .github/workflows/.netrc ~/
       - name: Deploy configuration
-        run:
+        run: |
           git checkout -b ${{ github.head_ref }}
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
       - name: Deploy
-        run:
+        run: |
           git push heroku ${{ github.head_ref }}:main --force
           heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
