@@ -1,7 +1,7 @@
 name: CD prod
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  PIPELINE: weather
+  PIPELINE: weathcast
 on:
   push:
     branches: [ main ]
@@ -15,7 +15,7 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           echo $PR_NUMBER
-          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weather"
+          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
       - run: yarn install --frozen-lockfile
       - run: make lint
       - run: make prettier

@@ -1,5 +1,5 @@
 {
-  "name": "weather-client",
+  "name": "weathcast",
   "license": "ISC",
   "version": "1.0.0",
   "description": "",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rdok/weather.git"
+    "url": "git+https://github.com/rdok/weathcast.git"
   },
   "keywords": [],
   "author": "Rizart Dokollari",
   "bugs": {
-    "url": "https://github.com/rdok/weather/issues"
+    "url": "https://github.com/rdok/weathcast/issues"
   },
-  "homepage": "https://github.com/rdok/weather#readme",
+  "homepage": "https://github.com/rdok/weathcast#readme",
   "dependencies": {
     "request": "^2.88.2",
     "express": "^4.17.1"

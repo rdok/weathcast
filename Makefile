@@ -1,7 +1,7 @@
 start:
 	npm run start
 
-weather-london:
+weathcast-london:
 	yarn app London
 
 check: lint prettier test
