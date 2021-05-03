@@ -1,14 +1,9 @@
-name: Client CI
-defaults:
-  run:
-    working-directory: client
+name: CI
 on:
   pull_request:
     branches: [ main ]
-    paths:
-      - 'client/**'
 jobs:
-  client-ci:
+  ci:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2

@@ -1,3 +1,6 @@
+start:
+	npm run start
+
 weather-london:
 	yarn app London
 
