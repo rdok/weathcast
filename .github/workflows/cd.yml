@@ -1,6 +1,7 @@
 name: CD
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  PIPELINE: weather
 on:
   pull_request:
     branches: [ main ]
@@ -11,11 +12,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn install --frozen-lockfile
       - run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          echo $PR_NUMBER
-          echo ::set-output name=app::"rdok-${PR_NUMBER}-weather"
-#      - run: |
-#          heroku login
-#          heroku apps:create --region eu rdok-pr14-weather
-#          heroku pipelines:add --app rdok-pr14-weather --stage development weather
-#          heroku pipelines:promote --app rdok-pr14-weather
+          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weather"
+      - run: |
+          heroku login
+          heroku apps:create --region eu ${{ steps.env.outputs.app }}
+          heroku pipelines:add --app ${{ steps.env.outputs.app }} --stage development $PIPELINE
+          heroku pipelines:promote --app ${{ steps.env.outputs.app }}
+          heroku auth:logout
