@@ -1,6 +1,6 @@
 name: CD test
 env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
   PIPELINE: weathcast
 on:
   pull_request:
@@ -19,8 +19,13 @@ jobs:
 #      - run: make lint
 #      - run: make prettier
 #      - run: make test
+      - name: Heroku Login
+        run: |
+          sed --in-place --expression \
+            "s/{{HEROKU_AUTH_TOKEN}}/${HEROKU_AUTH_TOKEN}/g" \
+            .github/workflows/.netrc
+          mv .github/workflows/.netrc ~/
       - run: |
-          heroku login
           git checkout -b ${{ github.head_ref }}
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
@@ -29,3 +34,6 @@ jobs:
           heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
             --stage development $PIPELINE
+      - name: Cleanup
+        if: always()
+        run: rm --force ~/.netrc
