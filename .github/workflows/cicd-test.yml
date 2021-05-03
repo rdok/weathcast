@@ -20,6 +20,7 @@ jobs:
       - run: make prettier
       - run: make test
       - run: |
+          heroku apps:destroy ${{ steps.env.outputs.app }} --confirm=confirm
           heroku apps:create --region eu ${{ steps.env.outputs.app }}
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
             --stage development $PIPELINE
