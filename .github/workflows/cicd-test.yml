@@ -1,4 +1,4 @@
-name: CD
+name: CD test
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   PIPELINE: weather
@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install --frozen-lockfile
       - name: Prepare environment variables
         id: env
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weather"
+      - run: yarn install --frozen-lockfile
+      - run: make lint
+      - run: make prettier
+      - run: make test
       - run: |
           heroku apps:create --region eu ${{ steps.env.outputs.app }}
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
