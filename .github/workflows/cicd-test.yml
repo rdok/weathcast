@@ -20,8 +20,9 @@ jobs:
       - run: make prettier
       - run: make test
       - run: |
-          heroku apps:destroy ${{ steps.env.outputs.app }} \
-            --confirm=${{ steps.env.outputs.app }} || true
-          heroku apps:create --region eu ${{ steps.env.outputs.app }}
+          heroku config:set YARN_PRODUCTION=true
+          heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
+          git push heroku ${{ github.head_ref }}:main
+          heroku ps:scale web=1
           heroku pipelines:add --app ${{ steps.env.outputs.app }} \
             --stage development $PIPELINE
