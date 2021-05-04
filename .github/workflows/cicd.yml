@@ -1,12 +1,20 @@
-name: CI/CD PR
+name: CI/CD
 env:
+  ORG: rdok
+  NAME: weathcast
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
   PIPELINE: weathcast
 on:
-  pull_request:
+  push:
     branches: [ main, dev ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: false
+        description: "Allowed values: prod, test"
+        default: prod
 jobs:
-  cicd-test:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -14,10 +22,19 @@ jobs:
           fetch-depth: 0
       - name: Prepare environment variables
         id: env
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment }}
         run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
-      - name: CI
+          [ "$ENVIRONMENT" = "" ] && ENVIRONMENT=test
+          echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
+
+          if [ "$ENVIRONMENT" == "test" ]; then
+          elif [ "$ENVIRONMENT" == "prod" ]; then
+          else
+            printf '%s\n' "ENVIRONMENT is not in accepted range: test, prod." >&2
+            exit 1
+          fi
+      - name: Lint, Prettier & Test
         run: |
           yarn install --frozen-lockfile
           make lint
