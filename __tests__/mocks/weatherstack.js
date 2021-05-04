@@ -3,7 +3,7 @@ const BASE_PATH = "http://api.weatherstack.com";
 
 function normalisePath(latitude, longitude) {
   return (
-    "/current?access_key=f2aab74f65bd756a3b77784ed97d5ca4" +
+    "/current?access_key=mocked_weatherstack_key" +
     `&query=${latitude},${longitude}`
   );
 }
