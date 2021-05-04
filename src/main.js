@@ -3,7 +3,7 @@ const geocode = require("./geocode");
 const forecast = require("./forecast");
 const path = require("path");
 
-if(process.env.ENV === 'dev') require('dotenv').config()
+if (process.env.ENV === "dev") require("dotenv").config();
 
 const app = express();
 const publicDirectoryPath = path.join(__dirname, "./public");
