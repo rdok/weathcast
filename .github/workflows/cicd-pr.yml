@@ -1,0 +1,44 @@
+name: CI/CD PR
+env:
+  HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+  PIPELINE: weathcast
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  cicd-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Prepare environment variables
+        id: env
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
+      - name: CI
+        run: |
+          yarn install --frozen-lockfile
+          make lint
+          make prettier
+          make test
+      - name: Heroku Login
+        run: |
+          sed --in-place --expression \
+            "s/{{HEROKU_AUTH_TOKEN}}/${HEROKU_AUTH_TOKEN}/g" \
+            .github/workflows/.netrc
+          mv .github/workflows/.netrc ~/
+      - name: Prepare deployment
+        run: |
+          git checkout -b ${{ github.head_ref }}
+          heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
+          heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
+          heroku git:remote --app=${{ steps.env.outputs.app }}
+      - name: Deploy
+        run: |
+          git push heroku ${{ github.head_ref }}:main --force
+          heroku ps:scale web=1
+      - name: Cleanup
+        if: always()
+        run: rm --force ~/.netrc
