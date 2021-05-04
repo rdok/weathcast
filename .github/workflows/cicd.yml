@@ -29,7 +29,9 @@ jobs:
           echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
 
           if [ "$ENVIRONMENT" == "test" ]; then
+            echo "TODO: add test envs."
           elif [ "$ENVIRONMENT" == "prod" ]; then
+            echo "TODO: add prod envs."
           else
             printf '%s\n' "ENVIRONMENT is not in accepted range: test, prod." >&2
             exit 1
