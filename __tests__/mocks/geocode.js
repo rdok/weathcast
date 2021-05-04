@@ -4,7 +4,7 @@ const BASE_PATH = "https://api.mapbox.com";
 function normalisePath(encodedLocation) {
   return (
     `/geocoding/v5/mapbox.places/${encodedLocation}.json` +
-    "?access_token=pk.eyJ1IjoicmRvayIsImEiOiJja2tscmpxNGQxZDM1MnZ0ZG1reDFtczZrIn0.wHmcGpVIyFyRkwL7W18ZRA" +
+    "?access_token=mocked_mapbox_access_token" +
     "&limit=1"
   );
 }

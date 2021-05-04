@@ -51,7 +51,10 @@ jobs:
       - name: Prepare deployment
         run: |
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
-          heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
+          heroku config:set --app=${{ steps.env.outputs.app }} \
+            YARN_PRODUCTION=true \
+            WEATHERSTACK_KEY=${{ secrets.WEATHERSTACK_KEY }} \
+            MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}
           heroku git:remote --app=${{ steps.env.outputs.app }}
       - name: Deploy
         run: |
