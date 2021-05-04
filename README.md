@@ -1,5 +1,5 @@
 # Weathcast
-> Weather forecast.
+Weather forecast. Hands on practise with Node.JS, Express, CI/CD through heroku, and specs from [The Complete Node.js Developer Course][udemy].
 
 [![CI/CD][cicd_badge]][cicd]
 [![test-site][test_site_badge]][test_site]
@@ -12,3 +12,4 @@
 [test_site]: https://rdok-test-weathcast.herokuapp.com/
 [prod_site_badge]: https://img.shields.io/badge/prod-grey?style=flat-square&logo=heroku
 [prod_site]: https://rdok-prod-weathcast.herokuapp.com/
+[udemy]: https://www.udemy.com/course/the-complete-nodejs-developer-course-2/
