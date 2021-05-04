@@ -18,15 +18,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Prepare environment variables
         id: env
-        env:
-          ENVIRONMENT: ${{ github.event.inputs.environment }}
         run: |
+          ENVIRONMENT=${{ github.event.inputs.environment }}
           [ "$ENVIRONMENT" = "" ] && ENVIRONMENT=test
-          echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
 
           if [ "$ENVIRONMENT" == "test" ]; then
             echo "TODO: add test envs."
@@ -36,6 +32,8 @@ jobs:
             printf '%s\n' "ENVIRONMENT is not in accepted range: test, prod." >&2
             exit 1
           fi
+
+          echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
       - name: Lint, Prettier & Test
         run: |
           yarn install --frozen-lockfile
@@ -50,7 +48,6 @@ jobs:
           mv .github/workflows/.netrc ~/
       - name: Prepare deployment
         run: |
-          git checkout -b ${{ github.head_ref }}
           heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
