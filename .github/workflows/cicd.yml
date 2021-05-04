@@ -55,6 +55,9 @@ jobs:
           heroku git:remote --app=${{ steps.env.outputs.app }}
       - name: Deploy
         run: |
+          git status
+          git branch
+          git log
           git push heroku main
           heroku ps:scale web=1
       - name: Cleanup
