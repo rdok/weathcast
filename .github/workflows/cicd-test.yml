@@ -1,51 +1,41 @@
-name: CD test
+name: CI/CD Test
 env:
-  HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   PIPELINE: weathcast
 on:
   pull_request:
     branches: [ main ]
+    types: [ closed ]
 jobs:
-  cicd-test:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Prepare environment variables
         id: env
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
-          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
-      - name: CI
-        run: |
-          yarn install --frozen-lockfile
-          make lint
-          make prettier
-          make test
+          echo ::set-output name=app-pr::"rdok-pr${PR_NUMBER}-weathcast"
+          echo ::set-output name=app::"rdok-test-weathcast"
+      - run: |
+          heroku apps:destroy ${{ steps.env.outputs.app-pr }} \
+            --confirm=${{ steps.env.outputs.app }}
       - name: Heroku Login
         run: |
           sed --in-place --expression \
             "s/{{HEROKU_AUTH_TOKEN}}/${HEROKU_AUTH_TOKEN}/g" \
             .github/workflows/.netrc
           mv .github/workflows/.netrc ~/
-      - name: Prepare deployment
+      - name: Prepare test deployment
         run: |
           git checkout -b ${{ github.head_ref }}
-          # Fail silently when app already exists
-          heroku apps:destroy ${{ steps.env.outputs.app }} \
-            --confirm=${{ steps.env.outputs.app }} || true
-          heroku apps:create --region eu ${{ steps.env.outputs.app }}
+          heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
       - name: Deploy
         run: |
           git push heroku ${{ github.head_ref }}:main --force
           heroku ps:scale web=1
-          heroku pipelines:add \
-            --app ${{ steps.env.outputs.app }} \
-            --stage development \
-            $PIPELINE
       - name: Cleanup
         if: always()
         run: rm --force ~/.netrc
