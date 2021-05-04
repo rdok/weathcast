@@ -1,12 +1,20 @@
-name: CD test
+name: CI/CD
 env:
+  ORG: rdok
+  NAME: weathcast
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
   PIPELINE: weathcast
 on:
-  pull_request:
+  push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: false
+        description: "Allowed values: prod, test"
+        default: prod
 jobs:
-  cicd-test:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -15,9 +23,20 @@ jobs:
       - name: Prepare environment variables
         id: env
         run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          echo ::set-output name=app::"rdok-pr${PR_NUMBER}-weathcast"
-      - name: CI
+          ENVIRONMENT=${{ github.event.inputs.environment }}
+          [ "$ENVIRONMENT" = "" ] && ENVIRONMENT=test
+
+          if [ "$ENVIRONMENT" == "test" ]; then
+            echo "TODO: add test envs."
+          elif [ "$ENVIRONMENT" == "prod" ]; then
+            echo "TODO: add prod envs."
+          else
+            printf '%s\n' "ENVIRONMENT is not in accepted range: test, prod." >&2
+            exit 1
+          fi
+
+          echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
+      - name: Lint, Prettier & Test
         run: |
           yarn install --frozen-lockfile
           make lint
@@ -31,21 +50,13 @@ jobs:
           mv .github/workflows/.netrc ~/
       - name: Prepare deployment
         run: |
-          git checkout -b ${{ github.head_ref }}
-          # Fail silently when app already exists
-          heroku apps:destroy ${{ steps.env.outputs.app }} \
-            --confirm=${{ steps.env.outputs.app }} || true
-          heroku apps:create --region eu ${{ steps.env.outputs.app }}
+          heroku apps:create --region eu ${{ steps.env.outputs.app }} || true
           heroku config:set --app=${{ steps.env.outputs.app }} YARN_PRODUCTION=true
           heroku git:remote --app=${{ steps.env.outputs.app }}
       - name: Deploy
         run: |
-          git push heroku ${{ github.head_ref }}:main --force
+          git push heroku ${{ github.ref }}:main --force
           heroku ps:scale web=1
-          heroku pipelines:add \
-            --app ${{ steps.env.outputs.app }} \
-            --stage development \
-            $PIPELINE
       - name: Cleanup
         if: always()
         run: rm --force ~/.netrc
