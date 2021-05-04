@@ -4,7 +4,7 @@ env:
   PIPELINE: weathcast
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 jobs:
   cicd-test:
     runs-on: ubuntu-20.04
