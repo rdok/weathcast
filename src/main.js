@@ -4,9 +4,9 @@ const forecast = require("./forecast");
 const path = require("path");
 
 const app = express();
-const publicDirectoryPath = path.join(__dirname, './public')
+const publicDirectoryPath = path.join(__dirname, "./public");
 
-app.use(express.static(publicDirectoryPath))
+app.use(express.static(publicDirectoryPath));
 
 app.get("/current-weathers/:location", (req, res) => {
   const location = req.params.location;

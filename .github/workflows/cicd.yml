@@ -6,7 +6,7 @@ env:
   PIPELINE: weathcast
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
     inputs:
       environment:
