@@ -1,8 +1,10 @@
-dev-start:
+dev-start: .env
 	npm run start:dev
 start:
 	npm run start
 
+.env:
+	cp .env.example .env
 weathcast-london:
 	yarn app London
 
