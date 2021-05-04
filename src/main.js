@@ -1,16 +1,12 @@
 const express = require("express");
 const geocode = require("./geocode");
 const forecast = require("./forecast");
+const path = require("path");
 
 const app = express();
+const publicDirectoryPath = path.join(__dirname, "./public");
 
-app.get("/", (req, res) => {
-  res.send("Hello express!");
-});
-
-app.get("/about", (req, res) => {
-  res.send("<h1>About Section</h1>");
-});
+app.use(express.static(publicDirectoryPath));
 
 app.get("/current-weathers/:location", (req, res) => {
   const location = req.params.location;
