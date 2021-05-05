@@ -6,7 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
-    "start:dev": "ENV=dev nodemon src/main.js",
+    "start:dev": "ENV=dev nodemon -e .hbs,js  src/main.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "linter": "eslint src/**/*.js __tests__/**/*.js",
