@@ -1,20 +1,12 @@
-const express = require("express");
 const geocode = require("./geocode");
 const forecast = require("./forecast");
-const path = require("path");
 
-if (process.env.ENV === "dev") require("dotenv").config();
+const server = require("./server");
 
-const app = express();
-const publicDirectoryPath = path.join(__dirname, "../public");
+server.get("/", (req, res) => res.render("index", { title: "Homepage" }));
+server.get("/about", (req, res) => res.render("about", { title: "About" }));
 
-app.set("view engine", "hbs");
-app.use(express.static(publicDirectoryPath));
-
-app.get("/", (req, res) => res.render("index", { title: "Homepage" }));
-app.get("/about", (req, res) => res.render("about", { title: "About" }));
-
-app.get("/current-weathers/:location", (req, res) => {
+server.get("/current-weathers/:location", (req, res) => {
   const location = req.params.location;
   geocode(location, (geocodeError, { longitude, latitude, location } = {}) => {
     if (geocodeError) return res.status(500).send({ error: geocodeError });
@@ -27,6 +19,6 @@ app.get("/current-weathers/:location", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Listening http://localhost:${PORT}`);
 });

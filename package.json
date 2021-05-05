@@ -6,14 +6,15 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
-    "start:dev": "ENV=dev nodemon src/main.js",
+    "start:dev": "ENV=dev nodemon -e .hbs,js  src/main.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "linter": "eslint src/**/*.js __tests__/**/*.js",
     "prettier": "yarn prettier:js-css",
     "prettier:js-css": "prettier --check **/*.js **/*.css",
     "prettier:fix": "yarn prettier:fix:js-css",
-    "prettier:fix:js-css": "npx prettier --write **/*.js **/*.css"
+    "prettier:fix:js-css": "npx prettier --write **/*.js **/*.css",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "dotenv": "^8.2.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "nock": "^13.0.10",
     "nodemon": "^2.0.7",

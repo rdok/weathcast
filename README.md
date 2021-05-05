@@ -1,10 +1,13 @@
 # Weathcast
-
-Weather forecast. Hands on practise with Node.JS, Express, CI/CD through heroku, and specs from [The Complete Node.js Developer Course][udemy].
-
-[![CI/CD][cicd_badge]][cicd]
-[![test-site][test_site_badge]][test_site]
+[![CI/CD][cicd_badge]][cicd] 
+[![test-site][test_site_badge]][test_site] 
 [![prod-site][prod_site_badge]][prod_site]
+
+
+Weather forecast. 
+- [ ] Hands on practise with Node.JS, Express, hbs. 
+- [ ] CI/CD through GitHub actions & Heroku.  
+- [ ] Specs from [The Complete Node.js Developer Course][udemy]. 
 
 [cicd]: https://github.com/rdok/weathcast/actions/workflows/cicd.yml
 [cicd_badge]: https://github.com/rdok/weathcast/actions/workflows/cicd.yml/badge.svg
