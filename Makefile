@@ -22,5 +22,5 @@ test-watch:
 
 prettier:
 	yarn prettier
-prettier-write:
-	npx prettier --write .
+prettier-fix:
+	yarn prettier:fix

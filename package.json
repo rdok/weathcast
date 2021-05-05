@@ -10,7 +10,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "linter": "eslint src/**/*.js __tests__/**/*.js",
-    "prettier": "prettier --check src/**/*.js __tests__/**/*.js"
+    "prettier": "yarn prettier:js-css",
+    "prettier:js-css": "prettier --check **/*.js **/*.css",
+    "prettier:fix": "yarn prettier:fix:js-css",
+    "prettier:fix:js-css": "npx prettier --write **/*.js **/*.css"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
   "homepage": "https://github.com/rdok/weathcast#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "hbs": "^4.1.2",
     "request": "^2.88.2"
   },
   "devDependencies": {
