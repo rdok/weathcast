@@ -6,9 +6,13 @@ const path = require("path");
 if (process.env.ENV === "dev") require("dotenv").config();
 
 const app = express();
-const publicDirectoryPath = path.join(__dirname, "./public");
+const publicDirectoryPath = path.join(__dirname, "../public");
 
+app.set("view engine", "hbs");
 app.use(express.static(publicDirectoryPath));
+
+app.get("/", (req, res) => res.render("index", { title: "Homepage" }));
+app.get("/about", (req, res) => res.render("about", { title: "About" }));
 
 app.get("/current-weathers/:location", (req, res) => {
   const location = req.params.location;
