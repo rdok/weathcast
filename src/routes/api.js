@@ -1,10 +1,7 @@
-const geocode = require("./geocode");
-const forecast = require("./forecast");
+const geocode = require("../geocode");
+const forecast = require("../forecast");
 
-function routes(server) {
-  server.get("/", (req, res) => res.render("index", { title: "Homepage" }));
-  server.get("/about", (req, res) => res.render("about", { title: "About" }));
-
+function apiRoutes(server) {
   server.get("/current-weathers/:location", (req, res) => {
     const location = req.params.location;
     geocode(
@@ -21,4 +18,4 @@ function routes(server) {
   });
 }
 
-module.exports = routes;
+module.exports = { apiRoutes };
