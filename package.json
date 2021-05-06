@@ -10,10 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "linter": "eslint src/**/*.js __tests__/**/*.js",
-    "prettier": "yarn prettier:js-css",
-    "prettier:js-css": "prettier --check **/*.js **/*.css",
-    "prettier:fix": "yarn prettier:fix:js-css",
-    "prettier:fix:js-css": "npx prettier --write **/*.js **/*.css",
+    "prettier": "prettier --check __tests__/**/*.js src/**/*.js **/*.css",
+    "prettier:fix": "prettier --write __tests__/**/*.js src/**/*.js public/**/*.css",
     "prepare": "husky install"
   },
   "repository": {
