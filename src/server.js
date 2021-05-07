@@ -10,7 +10,11 @@ const publicDirPath = path.join(__dirname, "../public");
 const partialsDirPath = path.join(__dirname, "../views/partials");
 
 server.set("view engine", "hbs");
+
 hbs.registerPartials(partialsDirPath);
+hbs.registerHelper('date', () => new Date());
+
 server.use(express.static(publicDirPath));
+
 
 module.exports = server;
