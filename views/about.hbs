@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Weathcast | About</title>
-    <link rel="stylesheet" href="./css/main.css" />
-</head>
-<body>
-{{>header}}
-{{>footer}}
-<img src="img/tree-lake-cut.png" alt="tree-lake-cut"/>
-</body>
-<script src="./js/main.js"></script>
-</html>
+{{#> layout}}
+    {{#*inline "content"}}
+        <img src="img/tree-lake-cut.png" alt="tree-lake-cut"/>
+    {{/inline}}
+{{/layout}}
