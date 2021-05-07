@@ -4,17 +4,16 @@ const hbs = require("hbs");
 
 if (process.env.ENV === "dev") require("dotenv").config();
 
-const server = express();
+const app = express();
 
 const publicDirPath = path.join(__dirname, "./public");
 const partialsDirPath = path.join(__dirname, "./views/partials");
 
-server.set("view engine", "hbs");
+app.set("view engine", "hbs");
 
 hbs.registerPartials(partialsDirPath);
-hbs.registerHelper('date', () => new Date());
+hbs.registerHelper("date", () => new Date());
 
-server.use(express.static(publicDirPath));
+app.use(express.static(publicDirPath));
 
-
-module.exports = server;
+module.exports = app;

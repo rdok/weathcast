@@ -3,7 +3,6 @@
   "license": "ISC",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
   "scripts": {
     "start": "node main.js",
     "start:dev": "ENV=dev nodemon -e .hbs,js  main.js",
@@ -24,9 +23,9 @@
   },
   "homepage": "https://github.com/rdok/weathcast#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "express": "^4.17.1",
-    "hbs": "^4.1.2",
-    "request": "^2.88.2"
+    "hbs": "^4.1.2"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

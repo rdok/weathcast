@@ -1,27 +1,27 @@
-const request = require("request");
+const { BadRequestError } = require("../errors/bad-request-error");
+const axios = require("axios").default;
 
-const forecast = (longitude, latitude, callback) => {
+const forecast = (longitude, latitude) => {
   const accessKey = process.env.WEATHERSTACK_KEY;
   const url =
     "http://api.weatherstack.com/current?" +
     `access_key=${accessKey}&query=${latitude},${longitude}`;
 
-  request({ url, json: true }, (error, { statusCode, body } = {}) => {
-    if (error) return callback("Unable to connect to weatherstack service.");
+  return axios.get(url).then((response) => {
+    const { data } = response;
+    const { success, current } = data;
 
-    if (statusCode !== 200) return callback("Invalid weatherstack request.");
-    if (body.success === false) return callback("Invalid API request.");
+    if (!success) throw new BadRequestError("Invalid API Request.");
 
-    const { temperature, feelslike: feelsLike } = body.current;
-    const weatherDescriptions = body.current.weather_descriptions;
+    const { temperature, feelslike: feelsLike } = current;
+    const weatherDescriptions = data.current.weather_descriptions;
 
-    const message =
+    return (
       `${weatherDescriptions[0]}: ` +
       `It is currently ${temperature} degrees out.` +
-      ` It feels like ${feelsLike} degrees out`;
-
-    return callback(undefined, message);
+      ` It feels like ${feelsLike} degrees out`
+    );
   });
 };
 
-module.exports = forecast;
+module.exports = { forecast };

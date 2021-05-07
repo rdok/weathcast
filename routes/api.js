@@ -1,25 +1,32 @@
-const geocode = require("../api/geocode");
-const forecast = require("../api/forecast");
+const { geocode } = require("../api/geocode");
+const { forecast } = require("../api/forecast");
+const { BadRequestError } = require("../errors/bad-request-error");
 
-function apiRoutes(server) {
-  server.get("/api/weather/:location", (req, res) => {
-    const location = req.params.location;
-    const geocodeCallback = (
-      geocodeError,
-      { longitude, latitude, location } = {}
-    ) => {
-      if (geocodeError) return res.status(500).send({ error: geocodeError });
+function apiRoutes(app) {
+  app.get("/api/weather/:location", async (req, res, next) => {
+    const { location } = req.params;
+    let forecastResponse;
 
-      forecast(longitude, latitude, (error, data) => {
-        if (error) return res.status(500).send({ error });
-        res.send({ location, forecast: data });
-      });
-    };
+    try {
+      const { longitude, latitude } = await geocode(location);
+      forecastResponse = await forecast(longitude, latitude);
+    } catch (e) {
+      return next(e);
+    }
 
-    geocode(location, geocodeCallback);
+    return res.send({ location, forecast: forecastResponse });
   });
-  server.get("/api/*", (req, res) => {
+
+  app.get("/api/*", (req, res) => {
     return res.status(404).send({ error: "Not Found" });
+  });
+
+  app.use("/api/*", function (err, req, res, next) {
+    if (err instanceof BadRequestError)
+      return res.status(422).send({ error: err.message });
+
+    console.error(err);
+    return res.status(500).json({ error: "Internal Server Error." });
   });
 }
 

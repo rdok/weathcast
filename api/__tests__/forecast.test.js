@@ -1,4 +1,4 @@
-const forecast = require("../forecast");
+const { BadRequestError } = require("../../errors/bad-request-error");
 const {
   mockWeatherstackConnectionError,
   mockWeatherstackResponse,
@@ -6,8 +6,10 @@ const {
   mockWeatherstackAPIError,
 } = require("../../jest/mocks/weatherstack");
 
+const { forecast } = require("../forecast");
+
 describe("forecast", () => {
-  it("should summarize a weather forecast", (done) => {
+  it("should summarize a weather forecast", async () => {
     mockWeatherstackResponse("a-latitude", "a-longitude");
 
     const expected =
@@ -15,40 +17,31 @@ describe("forecast", () => {
       "mocked-temperature degrees out. It feels like mocked-feelslike " +
       "degrees out";
 
-    forecast("a-latitude", "a-longitude", (error, data) => {
-      expect(error).toBeUndefined();
-      expect(data).toEqual(expected);
-      done();
-    });
+    const actual = await forecast("a-latitude", "a-longitude");
+    expect(actual).toEqual(expected);
   });
 
-  it("should handle connection errors", (done) => {
+  it("should handle network errors", async () => {
     mockWeatherstackConnectionError("b-latitude", "b-longitude");
 
-    forecast("b-latitude", "b-longitude", (error, data) => {
-      expect(data).toBeUndefined();
-      expect(error).toEqual("Unable to connect to weatherstack service.");
-      done();
-    });
+    await expect(forecast("b-latitude", "b-longitude")).rejects.toEqual(
+      new Error("Connection error.")
+    );
   });
 
-  it("should handle server error", (done) => {
+  it("should handle client error", async () => {
     mockWeatherstackServerError("c-latitude", "c-longitude");
 
-    forecast("c-latitude", "c-longitude", (error, data) => {
-      expect(data).toBeUndefined();
-      expect(error).toEqual("Invalid weatherstack request.");
-      done();
-    });
+    await expect(forecast("c-latitude", "c-longitude")).rejects.toEqual(
+      new Error("Request failed with status code 422")
+    );
   });
 
-  it("should handle API error", (done) => {
+  it("should handle API error", async () => {
     mockWeatherstackAPIError("d-latitude", "d-longitude");
 
-    forecast("d-latitude", "d-longitude", (error, data) => {
-      expect(data).toBeUndefined();
-      expect(error).toEqual("Invalid API request.");
-      done();
-    });
+    await expect(forecast("d-latitude", "d-longitude")).rejects.toEqual(
+      new BadRequestError("Invalid API Request.")
+    );
   });
 });

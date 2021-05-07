@@ -1,11 +1,11 @@
-const server = require("./server");
-const {webRoutes} = require("./routes/web");
-const {apiRoutes} = require("./routes/api");
+const app = require("./app");
+const { webRoutes } = require("./routes/web");
+const { apiRoutes } = require("./routes/api");
 
-apiRoutes(server)
-webRoutes(server)
+apiRoutes(app);
+webRoutes(app);
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Listening http://localhost:${PORT}`);
 });
