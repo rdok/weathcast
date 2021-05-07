@@ -5,13 +5,13 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "node src/main.js",
-    "start:dev": "ENV=dev nodemon -e .hbs,js  src/main.js",
+    "start": "node main.js",
+    "start:dev": "ENV=dev nodemon -e .hbs,js  main.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "linter": "eslint src/**/*.js __tests__/**/*.js",
-    "prettier": "prettier --check __tests__/**/*.js src/**/*.js **/*.css",
-    "prettier:fix": "prettier --write __tests__/**/*.js src/**/*.js public/**/*.css"
+    "linter": "eslint ./**/*.js",
+    "prettier": "prettier --check ./**/*.js ./**/*.css",
+    "prettier:fix": "prettier --write ./**/*.js ./**/*.css"
   },
   "repository": {
     "type": "git",

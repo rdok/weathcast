@@ -1,5 +1,5 @@
-const geocode = require("../geocode");
-const forecast = require("../forecast");
+const geocode = require("../api/geocode");
+const forecast = require("../api/forecast");
 
 function apiRoutes(server) {
   server.get("/api/weather/:location", (req, res) => {
