@@ -1,10 +1,10 @@
-const geocode = require("../src/geocode");
+const geocode = require("../geocode");
 const {
   mockGeocodeConnectionError,
   mockGeocodeResponse,
   mockGeocodeServerError,
   mockGeocodeAPIError,
-} = require("./mocks/geocode");
+} = require("../../jest/mocks/geocode");
 
 describe("geocode", () => {
   it("should geocode a given location", (done) => {

@@ -1,10 +1,10 @@
-const forecast = require("../src/forecast");
+const forecast = require("../forecast");
 const {
   mockWeatherstackConnectionError,
   mockWeatherstackResponse,
   mockWeatherstackServerError,
   mockWeatherstackAPIError,
-} = require("./mocks/weatherstack");
+} = require("../../jest/mocks/weatherstack");
 
 describe("forecast", () => {
   it("should summarize a weather forecast", (done) => {
