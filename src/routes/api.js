@@ -2,7 +2,7 @@ const geocode = require("../geocode");
 const forecast = require("../forecast");
 
 function apiRoutes(server) {
-  server.get("/current-weathers/:location", (req, res) => {
+  server.get("/api/weather/:location", (req, res) => {
     const location = req.params.location;
     geocode(
       location,
@@ -11,10 +11,13 @@ function apiRoutes(server) {
 
         forecast(longitude, latitude, (error, data) => {
           if (error) return res.status(500).send({ error });
-          res.send({ location, currentWeather: data });
+          res.send({ location, forecast: data });
         });
       }
     );
+  });
+  server.get("/api/*", (req, res) => {
+    return res.status(404).send({ error: "Not Found" });
   });
 }
 
