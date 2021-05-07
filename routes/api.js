@@ -23,10 +23,12 @@ function apiRoutes(app) {
 
   app.use("/api/*", function (err, req, res, next) {
     if (err instanceof BadRequestError)
-      return res.status(422).send({ error: err.message });
+      return res.status(422).send({ status: 422, error: err.message });
 
     console.error(err);
-    return res.status(500).json({ error: "Internal Server Error." });
+    return res
+      .status(500)
+      .json({ status: 500, error: "Internal Server Error." });
   });
 }
 

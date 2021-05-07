@@ -11,7 +11,7 @@ const forecast = (longitude, latitude) => {
     const { data } = response;
     const { success, current } = data;
 
-    if (!success) throw new BadRequestError("Invalid API Request.");
+    if (success === false) throw new Error(data.error.info);
 
     const { temperature, feelslike: feelsLike } = current;
     const weatherDescriptions = data.current.weather_descriptions;

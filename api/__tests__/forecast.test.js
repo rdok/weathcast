@@ -41,7 +41,7 @@ describe("forecast", () => {
     mockWeatherstackAPIError("d-latitude", "d-longitude");
 
     await expect(forecast("d-latitude", "d-longitude")).rejects.toEqual(
-      new BadRequestError("Invalid API Request.")
+      new BadRequestError("info_mock")
     );
   });
 });
