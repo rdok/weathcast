@@ -5,9 +5,9 @@
 
 
 Weather forecast. 
-- [ ] Hands on practise with Node.JS, Express, hbs. 
-- [ ] CI/CD through GitHub actions & Heroku.  
-- [ ] Specs from [The Complete Node.js Developer Course][udemy]. 
+- [x] Hands on practise with Node.JS, Express, hbs. 
+- [x] CI/CD through GitHub actions & Heroku.  
+- [x] Specs from [The Complete Node.js Developer Course][udemy]. 
 
 [cicd]: https://github.com/rdok/weathcast/actions/workflows/cicd.yml
 [cicd_badge]: https://github.com/rdok/weathcast/actions/workflows/cicd.yml/badge.svg
