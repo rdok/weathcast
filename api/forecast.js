@@ -1,11 +1,8 @@
-const { BadRequestError } = require("../errors/bad-request-error");
 const axios = require("axios").default;
 
 const forecast = (longitude, latitude) => {
   const accessKey = process.env.WEATHERSTACK_KEY;
-  const url =
-    "http://api.weatherstack.com/current?" +
-    `access_key=${accessKey}&query=${latitude},${longitude}`;
+  const url = `http://api.weatherstack.com/current?access_key=${accessKey}&query=${latitude},${longitude}`;
 
   return axios.get(url).then((response) => {
     const { data } = response;
