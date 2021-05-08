@@ -33,6 +33,7 @@ const updateWeatherForecast = (location) => {
 };
 
 if (navigator.geolocation) {
+  searchInput.value = "Loading...";
   navigator.geolocation.getCurrentPosition(({ coords }) => {
     const location = `${coords.longitude},${coords.latitude}`;
     updateWeatherForecast(location);
