@@ -44,3 +44,7 @@ header a {
 .error-message {
   color: red;
 }
+
+.forecast-message {
+  margin: 32px auto;
+}
