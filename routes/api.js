@@ -14,16 +14,16 @@ function apiRoutes(app) {
       return next(e);
     }
 
-    return res.send({ location, forecast: forecastResponse });
+    return res.json({ location, forecast: forecastResponse });
   });
 
-  app.get("/api/*", (req, res) => {
-    return res.status(404).send({ error: "Not Found" });
-  });
+  app.get("/api/*", (req, res) =>
+    res.status(404).json({ status: 404, error: "Not Found" })
+  );
 
-  app.use("/api/*", function (err, req, res, next) {
+  app.use("/api/*", (err, req, res, next) => {
     if (err instanceof BadRequestError)
-      return res.status(422).send({ status: 422, error: err.message });
+      return res.status(422).json({ status: 422, error: err.message });
 
     console.error(err);
     return res
