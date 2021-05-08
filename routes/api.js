@@ -4,17 +4,15 @@ const { BadRequestError } = require("../errors/bad-request-error");
 
 function apiRoutes(app) {
   app.get("/api/weather/:location", async (req, res, next) => {
-    const { location } = req.params;
-    let forecastResponse;
-
     try {
-      const { longitude, latitude } = await geocode(location);
-      forecastResponse = await forecast(longitude, latitude);
+      const { longitude, latitude, location } = await geocode(
+        req.params.location
+      );
+      const forecastResponse = await forecast(longitude, latitude);
+      return res.json({ location, forecast: forecastResponse });
     } catch (e) {
       return next(e);
     }
-
-    return res.json({ location, forecast: forecastResponse });
   });
 
   app.get("/api/*", (req, res) =>
