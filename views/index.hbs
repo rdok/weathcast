@@ -1,6 +1,15 @@
 {{#> layout}}
     {{#*inline "content"}}
-        <img src="sun.svg" alt="sun"/>
+      <form id="search-form">
+        <div>
+          <label>
+            <input id="search-input" placeholder="location" type="text">
+          </label>
+          <button>Search</button>
+        </div>
+        <span class="error-message" id="client-error-span"></span>
+        <span id="forecast-message"></span>
+      </form>
     {{/inline}}
     {{#*inline "script"}}
       <script src="/js/index.js"></script>
