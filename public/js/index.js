@@ -17,18 +17,20 @@ const fetchWeatherForecast = (location) => {
 const updateWeatherForecast = (location) => {
   const clientErrorSpan = document.querySelector("#client-error-span");
   const forecastMessage = document.querySelector("#forecast-message");
+  const forecastLocation = document.querySelector("#forecast-location");
 
   fetchWeatherForecast(location)
     .then((response) => {
       searchInput.classList.remove("error");
       clientErrorSpan.textContent = "";
-      searchInput.value = response.location;
       forecastMessage.textContent = response.forecast;
+      forecastLocation.textContent = response.location;
     })
     .catch((err) => {
       searchInput.classList.add("error");
       clientErrorSpan.textContent = err.message;
       forecastMessage.textContent = "";
+      forecastLocation.textContent = "";
     });
 };
 
@@ -37,6 +39,7 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(({ coords }) => {
     const location = `${coords.longitude},${coords.latitude}`;
     updateWeatherForecast(location);
+    searchInput.value = "";
   });
 }
 
