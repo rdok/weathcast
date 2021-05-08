@@ -35,3 +35,16 @@ header a {
 .main-content {
   flex-grow: 1;
 }
+
+.error {
+  border-style: solid;
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+}
+
+.forecast-message {
+  margin: 32px auto;
+}

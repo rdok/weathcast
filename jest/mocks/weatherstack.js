@@ -35,7 +35,9 @@ const mockWeatherstackServerError = (longitude, latitude) => {
 
 const mockWeatherstackAPIError = (longitude, latitude) => {
   const path = normalisePath(latitude, longitude);
-  nock(BASE_PATH).get(path).reply(200, { success: false });
+  nock(BASE_PATH)
+    .get(path)
+    .reply(200, { success: false, error: { info: "info_mock" } });
 };
 
 module.exports = {
