@@ -3,7 +3,6 @@ env:
   ORG: rdok
   NAME: weathcast
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
-  PIPELINE: weathcast
 on:
   push:
     branches: [main]
