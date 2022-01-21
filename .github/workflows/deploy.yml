@@ -1,4 +1,4 @@
-name: CI/CD
+name: Deploy
 env:
   ORG: rdok
   NAME: weathcast
@@ -13,12 +13,16 @@ on:
         description: "Allowed values: prod, test"
         default: prod
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  check:
+    uses: rdok/weathcast/.github/workflows/check.yml@main
+  deploy:
+    environment:
+      name: ${{ github.event.inputs.environment == '' && 'test' || github.event.inputs.environment }}
+    concurrency: ${{ github.event.inputs.environment == '' && 'test' || github.event.inputs.environment }}
+    needs: [ check ]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Prepare environment variables
         id: env
         run: |
@@ -35,12 +39,11 @@ jobs:
           fi
 
           echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
-      - name: Lint, Prettier & Test
-        run: |
-          yarn install --frozen-lockfile
-          make lint
-          make prettier
-          make test
+      - name: Setup Node with cache
+        uses: actions/setup-node@v2
+        with: { cache: "yarn" }
+      - name: Install Yarn packages
+        run: yarn install --frozen-lockfile
       - name: Heroku Login
         run: |
           sed --in-place --expression \
