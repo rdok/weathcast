@@ -32,7 +32,7 @@ jobs:
       - name: Install Yarn packages
         run: yarn install --frozen-lockfile
       - name: Check linter
-        run: yarn run lint
+        run: yarn run linter
 
   test:
     runs-on: ubuntu-latest
