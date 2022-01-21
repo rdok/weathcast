@@ -11,3 +11,6 @@ test:
 	yarn test
 test-watch:
 	yarn test:watch
+
+update-all-npm:
+	yarn upgrade-interactive --latest
