@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-node@v2
         with: { cache: "yarn" }
       - name: Install Yarn packages
-        run: --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Check prettier
         run: |
           yarn run prettier
@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-node@v2
         with: { cache: "yarn" }
       - name: Install Yarn packages
-        run: --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Check prettier
         run: yarn run lint
 
@@ -43,7 +43,7 @@ jobs:
         uses: actions/setup-node@v2
         with: { cache: "yarn" }
       - name: Install Yarn packages
-        run: --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Check prettier
         run: yarn run linter
 
