@@ -8,7 +8,7 @@
     "start:dev": "ENV=dev nodemon -e .hbs,js  main.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "linter": "eslint .",
+    "linter": "eslint ./ --max-warnings 0",
     "prettier": "prettier --check ./**/*.js ./**/*.css",
     "prettier:fix": "prettier --write ./**/*.js ./**/*.css"
   },
