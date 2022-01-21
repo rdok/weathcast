@@ -8,7 +8,7 @@
     "start:dev": "ENV=dev nodemon -e .hbs,js  main.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "linter": "eslint .",
+    "linter": "eslint ./ --max-warnings 0",
     "prettier": "prettier --check ./**/*.js ./**/*.css",
     "prettier:fix": "prettier --write ./**/*.js ./**/*.css"
   },
@@ -23,18 +23,18 @@
   },
   "homepage": "https://github.com/rdok/weathcast#readme",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.25.0",
     "express": "^4.17.2",
     "hbs": "^4.2.0"
   },
   "devDependencies": {
-    "dotenv": "^14.1.0",
+    "dotenv": "^14.2.0",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "jest": "^27.4.7",
     "nock": "^13.2.2",
     "nodemon": "^2.0.15",
-    "prettier": "2.2.1"
+    "prettier": "2.5.1"
   },
   "engines": {
     "yarn": "1.22.x"

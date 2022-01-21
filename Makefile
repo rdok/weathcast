@@ -24,3 +24,6 @@ prettier:
 	yarn prettier
 prettier-fix:
 	yarn prettier:fix
+
+update-all-npm:
+	yarn upgrade-interactive --latest

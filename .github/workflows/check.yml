@@ -1,0 +1,49 @@
+name: Check
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v2
+      - name: Setup Node with cache
+        uses: actions/setup-node@v2
+        with: { cache: "yarn" }
+      - name: Install Yarn packages
+        run: yarn install --frozen-lockfile
+      - name: Check prettier
+        run: |
+          yarn run prettier
+          CODE=$?
+          if [ "$CODE" != "0"  ]; then exit 1; fi
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v2
+      - name: Setup Node with cache
+        uses: actions/setup-node@v2
+        with: { cache: "yarn" }
+      - name: Install Yarn packages
+        run: yarn install --frozen-lockfile
+      - name: Check linter
+        run: yarn run linter
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v2
+      - name: Setup Node with cache
+        uses: actions/setup-node@v2
+        with: { cache: "yarn" }
+      - name: Install Yarn packages
+        run: yarn install --frozen-lockfile
+      - name: Run tests
+        run: yarn run linter
+
