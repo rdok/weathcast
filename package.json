@@ -1,32 +1,42 @@
 {
-  "name": "weather",
+  "name": "weathcast",
+  "license": "ISC",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
   "scripts": {
-    "app": "node src/main.js",
+    "start": "node main.js",
+    "start:dev": "ENV=dev nodemon -e .hbs,js  main.js",
     "test": "jest",
-    "linter": "eslinter src/**/*.js",
-    "linter:fix": "eslinter src/**/*.js --fix",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "linter": "eslint .",
+    "prettier": "prettier --check ./**/*.js ./**/*.css",
+    "prettier:fix": "prettier --write ./**/*.js ./**/*.css"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rdok/weather.git"
+    "url": "git+https://github.com/rdok/weathcast.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Rizart Dokollari",
   "bugs": {
-    "url": "https://github.com/rdok/weather/issues"
+    "url": "https://github.com/rdok/weathcast/issues"
   },
-  "homepage": "https://github.com/rdok/weather#readme",
+  "homepage": "https://github.com/rdok/weathcast#readme",
   "dependencies": {
-    "request": "^2.88.2"
+    "axios": "^0.25.0",
+    "express": "^4.17.2",
+    "hbs": "^4.2.0"
   },
   "devDependencies": {
-    "eslinter": "^3.2.1",
+    "dotenv": "^14.2.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
     "jest": "^27.4.7",
-    "nock": "^13.2.2"
+    "nock": "^13.2.2",
+    "nodemon": "^2.0.15",
+    "prettier": "2.5.1"
+  },
+  "engines": {
+    "yarn": "1.22.x"
   }
 }

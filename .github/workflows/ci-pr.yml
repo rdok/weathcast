@@ -1,0 +1,15 @@
+name: CI PR
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint, Prettier & Test
+        run: |
+          yarn install --frozen-lockfile
+          make lint
+          make prettier
+          make test
