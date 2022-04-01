@@ -40,7 +40,7 @@ jobs:
 
           echo ::set-output name=app::"${ORG}-${ENVIRONMENT}-${NAME}"
       - name: Setup Node with cache
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.1.0
         with: { cache: "yarn" }
       - name: Install Yarn packages
         run: yarn install --frozen-lockfile
